@@ -1,0 +1,16 @@
+.counter-container {
+  border: 2px solid #61dafb;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px auto;
+  max-width: 300px;
+  text-align: center;
+}
+
+.counter-button {
+  background-color: #61dafb;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
