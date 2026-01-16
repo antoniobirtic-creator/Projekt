@@ -16,7 +16,7 @@ const Navbar = () => {
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow">
       <div className="container">
         <NavLink className="navbar-brand" to="/">
-          <img src="img/header/logo.svg" alt="logo" height="20" className="me-2" />
+          <img src="img/logo.jpg" alt="logo" height="20" className="me-2" />
           PRO-App
         </NavLink>
         
@@ -44,8 +44,6 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-          
-          {/* Desna strana navbara za ikone (SignIn/Cart) iz tvog HTML-a */}
         </div>
       </div>
     </nav>

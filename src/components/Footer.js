@@ -18,17 +18,20 @@ const Footer = () => {
 
           {/* Brzi linkovi - koristimo Link umjesto a tagova */}
           <div className="col-md-4 text-center">
-            <ul className="list-inline mb-0">
-              <li className="list-inline-item">
-                <Link to="/blog" className="text-secondary text-decoration-none px-2">Blog</Link>
-              </li>
-              <li className="list-inline-item">
-                <Link to="/Onama" className="text-secondary text-decoration-none px-2">O nama</Link>
-              </li>
-              <li className="list-inline-item">
-                <Link to="/Kontakt" className="text-secondary text-decoration-none px-2">Kontakt</Link>
-              </li>
-            </ul>
+<ul className="list-inline mb-0">
+    <li className="list-inline-item">
+      <Link to="/blog" className="text-secondary text-decoration-none px-2">Blog</Link>
+    </li>
+    <li className="list-inline-item">
+      <Link to="/Onama" className="text-secondary text-decoration-none px-2">O nama</Link>
+    </li>
+    <li className="list-inline-item">
+      <Link to="/Kontakt" className="text-secondary text-decoration-none px-2">Kontakt</Link>
+    </li>
+    <li className="list-inline-item">
+      <Link to="/users" className="text-secondary text-decoration-none px-2">Korisnici</Link>
+    </li>
+  </ul>
           </div>
 
           {/* Social (placeholderi) */}

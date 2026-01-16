@@ -7,6 +7,7 @@ import Blog from './pages/Blog';
 import BlogSingle from './pages/BlogSingle';
 import Onama from './pages/Onama';
 import Kontakt from './pages/Kontakt';
+import Users from './components/Users';
 
 
 function App() {
@@ -24,7 +25,8 @@ function App() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/Onama" element={<Onama />} />
             <Route path="/blog/mladen-grdovic" element={<BlogSingle />} />
-            <Route path="/Kontakt" element={<Kontakt />} />
+            <Route path="/kontakt" element={<Kontakt />} />
+            <Route path="/users" element={<Users />} />
 
           </Routes>
         </main>
