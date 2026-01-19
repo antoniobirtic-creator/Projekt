@@ -9,6 +9,7 @@ import Onama from './pages/Onama';
 import Kontakt from './pages/Kontakt';
 import Users from './components/Users';
 import Profil from './components/zadaci/Profil';
+import Korisnici from './components/zadaci/Korisnici';
 
 function App() {
   return (
@@ -27,9 +28,8 @@ function App() {
             <Route path="/blog/mladen-grdovic" element={<BlogSingle />} />
             <Route path="/kontakt" element={<Kontakt />} />
             <Route path="/users" element={<Users />} />
-
             <Route path="/profil" element={<Profil />} />
-
+            <Route path="/korisnici" element={<Korisnici />} />
           </Routes>
         </main>
 

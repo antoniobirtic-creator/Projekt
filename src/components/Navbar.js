@@ -8,7 +8,8 @@ const Navbar = () => {
     { path: '/blog/mladen-grdovic', label: 'Vijesti' }, 
     { path: '/Onama', label: 'O nama' },
     { path: '/Kontakt', label: 'Kontakt' },
-    { path: '/users', label: 'Users' }
+    { path: '/users', label: 'Users' },
+    { path: '/korisnici', label: 'Korisnici' },
   ];
 
   return (

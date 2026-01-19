@@ -1,22 +1,16 @@
+import Korisnik from './data/korisnik.json';
+
 
 // Funkcija za prikaz korisnika. //
 const Profil = () => {
 
-    const Korisnik = {
-        // JS objekt se sastoji od "key" : "value" parova //
-        "ime": "Marko",
-        "prezime": "Marković",
-        "godine": 28,
-        "vozackaDozvola": true,
-        "vjestine": ["JavaScript", "React", "Node.js"],
-        "adresa": {
-            "ulica": "Vukovarska 10",
-            "pbroj": 10000,
-            "grad": "Zagreb"
-        }
-    }
+    // Ovo JSON format, tekstualni oblik, string //
+    const KorisnikJSON = '{ "ime": "Marko", "prezime": "Marković", "godine": 28, "vozackaDozvola": true, "vjestine": ["JavaScript", "React", "Node.js, HTML", "CSS"], "adresa": { "ulica": "Vukovarska 10", "pbroj": 10000, "grad": "Zagreb" } }';
+    //Pomoću JSON.parse pretvaramo string u objekt//
+    const Korisnik = JSON.parse(KorisnikJSON);
+    
 
-
+    console.log(Korisnik);
 
     // Ova komponenta vraća info o korisniku.//
     return (
@@ -41,10 +35,11 @@ const Profil = () => {
 
                     {
 
-
+                        // Map funkcija prolazi kroz svaki element nssvog niza vještina i vraća ih kao listu //
+                        // index je drugi parametar koji nam daje redni broj elementa u nizu //
                     Korisnik.vjestine.map(
-                            (vjestina) => (
-                                <li>{vjestina}</li> 
+                            (vjestina, index) => (
+                                <li>{index + 1} {vjestina}</li> 
                             )
                         )
                     }

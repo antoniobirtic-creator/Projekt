@@ -1,0 +1,13 @@
+ {
+        
+        "ime": "Marko",
+        "prezime": "Marković",
+        "godine": 28,
+        "vozackaDozvola": true,
+        "vjestine": ["JavaScript", "React", "Node.js, HTML", "CSS"],
+        "adresa": {
+            "ulica": "Vukovarska 10",
+            "pbroj": 10000,
+            "grad": "Zagreb"
+        }
+}
