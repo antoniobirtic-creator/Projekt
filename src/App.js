@@ -8,7 +8,7 @@ import BlogSingle from './pages/BlogSingle';
 import Onama from './pages/Onama';
 import Kontakt from './pages/Kontakt';
 import Users from './components/Users';
-
+import Profil from './components/zadaci/Profil';
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
         
         <Navbar />
 
-        {/* Glavni sadržaj koji zauzima sav preostali prostor (flex-grow-1) */}
+        
         <main className="flex-grow-1 container mt-4">
           <Routes>
             <Route path="/" element={<Naslovnica />} />
@@ -27,6 +27,8 @@ function App() {
             <Route path="/blog/mladen-grdovic" element={<BlogSingle />} />
             <Route path="/kontakt" element={<Kontakt />} />
             <Route path="/users" element={<Users />} />
+
+            <Route path="/profil" element={<Profil />} />
 
           </Routes>
         </main>
