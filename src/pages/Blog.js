@@ -1,61 +1,36 @@
-import React from 'react';
+import React from 'react';  
+import posts from '../components/zadaci/data/blog.json';
+import './Blog.css';
+
 
 const Blog = () => {
-  // Senior praksa: Podaci su odvojeni od HTML-a (JSX-a)
-  const posts = [
-    {
-      id: 1,
-      title: "Uvod u React Router",
-      text: "Naučite kako raditi navigaciju bez osvježavanja stranice koristeći Link i NavLink komponente.",
-      img: "https://picsum.photos/id/1/600/400"
-    },
-    {
-      id: 2,
-      title: "Bootstrap 5 Savjeti",
-      text: "Kako brzo kreirati responzivan layout koristeći samo ugrađene Bootstrap klase.",
-      img: "https://picsum.photos/id/2/600/400"
-    },
-    {
-      id: 3,
-      title: "Senior Developer Mindset",
-      text: "Fokus na čisti kod, performanse i arhitekturu aplikacije je ono što razlikuje juniore od seniora.",
-      img: "https://picsum.photos/id/3/600/400"
-    }
-  ];
+    return (
+        <div className="blog-page">
+            <div className="container">
+                <h1>Blog</h1>
+                <div className="row">
+                    {posts.map((post) => (
+                        <div key={post.id} className="blog-post col-md-4 mb-4">
+                          
 
-  return (
-    <div className="pb-5">
-      {/* Header sekcija */}
-      <header className="text-center my-5">
-        <h1 className="display-4 fw-bold text-danger">Blog Vijesti</h1>
-        <p className="lead text-muted">Sve novosti iz svijeta codinga na jednom mjestu.</p>
-      </header>
-
-      {/* Grid sa člancima */}
-      <div className="row g-4">
-        {posts.map((post) => (
-          <div className="col-md-4" key={post.id}>
-            <div className="card h-100 shadow-sm border-0">
-              <img 
-                src={post.img} 
-                className="card-img-top" 
-                alt={post.title} 
-              />
-              <div className="card-body">
-                <h5 className="card-title fw-bold">{post.title}</h5>
-                <p className="card-text text-secondary">
-                  {post.text}
-                </p>
-              </div>
-              <div className="card-footer bg-white border-0 pb-3">
-                <button className="btn btn-outline-danger btn-sm">Pročitaj više</button>
-              </div>
+                            <img 
+                                src={post._embedded?.['wp:featuredmedia']?.[0]?.media_details.sizes.full.source_url} 
+                                alt={post.title.rendered} 
+                                className="img-fluid" 
+                            />
+                            <h2>{post.title.rendered}</h2>
+                            
+                            <div dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} />
+                            
+                            <p>Autor: {post._embedded?.author?.[0]?.name} |
+                            <span> Objavljeno: {new Date(post.date).toLocaleDateString('hr-HR')}</span>
+                            </p>
+                        </div>
+                    ))}
+                </div>
             </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+        </div>
+    );
 };
 
 export default Blog;

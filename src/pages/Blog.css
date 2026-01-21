@@ -1,0 +1,19 @@
+.blog-post img{
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+}
+
+@media (max-width: 440px) {
+    .blog-post img {
+        aspect-ratio: auto;
+    }
+    
+}
+
+.blog-post h2 {
+
+    font-size: 1.5rem;
+    margin-top: 1rem;
+}
