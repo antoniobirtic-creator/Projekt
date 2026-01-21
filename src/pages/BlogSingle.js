@@ -1,20 +1,21 @@
 import React from 'react';
+import post from '../components/zadaci/data/blog.json';
 
 const BlogSingle = () => {
-  // Podaci izvučeni iz tvog HTML-a (priprema za props ili API)
+  
   const postData = {
     title: "Mladena Grdovića policija je uhitila s 3,6 promila alkohola u krvi za volanom",
     subheading: "Bez dlake na jeziku",
     author: "Zvonimir Milaković",
     date: "15. prosinca, 2025",
-    bgImage: "img/mladen-grdovic-1.jpeg",
+
     videoSrc: "https://www.youtube.com/embed/6Ys_NniqIjE",
     quote: "Ne žalim zbog toga. Tu su postojale izdajice, oni ljubomorni, jer sam uvijek vozio dobar auto. Onaj koga si častio, taj te prvi izdao"
   };
 
   return (
     <article className="blog-post">
-      {/* Masthead / Header sekcija članka */}
+
       <header 
         className="masthead text-white py-5 mb-4" 
         style={{ 
@@ -39,7 +40,6 @@ const BlogSingle = () => {
         </div>
       </header>
 
-      {/* Sadržaj članka */}
       <div className="container px-4 px-lg-5">
         <div className="row justify-content-center">
           <div className="col-md-10 col-lg-8">
@@ -53,7 +53,7 @@ const BlogSingle = () => {
               a gdje je govorio o mnogim zanimljivostima iz privatnog života...
             </p>
 
-            {/* Responzivni Video Embed */}
+        
             <div className="ratio ratio-16x9 my-5 shadow">
               <iframe 
                 src={postData.videoSrc} 
