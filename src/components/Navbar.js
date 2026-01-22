@@ -10,6 +10,7 @@ const Navbar = () => {
     { path: '/Kontakt', label: 'Kontakt' },
     { path: '/users', label: 'Users' },
     { path: '/korisnici', label: 'Korisnici' },
+    { path: '/tecaj', label: 'Tečajna lista' },
   ];
 
   return (

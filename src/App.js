@@ -10,6 +10,7 @@ import Kontakt from './pages/Kontakt';
 import Users from './components/Users';
 import Profil from './components/zadaci/Profil';
 import Korisnici from './components/zadaci/Korisnici';
+import Tecaj from './components/Tecaj';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="/users" element={<Users />} />
             <Route path="/profil" element={<Profil />} />
             <Route path="/korisnici" element={<Korisnici />} />
+           <Route path="/tecaj" element={<Tecaj />} />
           </Routes>
         </main>
 
