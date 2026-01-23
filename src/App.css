@@ -1,5 +1,5 @@
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 h1 {
@@ -11,4 +11,9 @@ h1 {
 p {
   font-family: Arial, sans-serif;
   text-align: center;
+}
+
+a.wp-block-button__link.wp-element-button {
+  color: initial;
+  background-color: blueviolet;
 }

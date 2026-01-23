@@ -1,26 +1,26 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Naslovnica from './pages/Naslovnica';
-import Blog from './pages/Blog';
-import BlogSingle from './pages/BlogSingle';
-import Onama from './pages/Onama';
-import Kontakt from './pages/Kontakt';
-import Users from './components/Users';
-import Profil from './components/zadaci/Profil';
-import Korisnici from './components/zadaci/Korisnici';
-import Tecaj from './components/Tecaj';
+import React from "react";
+import "./App.css";
+import "./Gutenberg.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Naslovnica from "./pages/Naslovnica";
+import Blog from "./pages/Blog";
+import BlogSingle from "./pages/BlogSingle";
+import Onama from "./pages/Onama";
+import Kontakt from "./pages/Kontakt";
+import Users from "./components/Users";
+import Profil from "./components/zadaci/Profil";
+import Korisnici from "./components/zadaci/Korisnici";
+import Tecaj from "./components/Tecaj";
 
 function App() {
   return (
     <Router>
       {/* Glavni kontejner s flex postavkama za fiksni footer */}
       <div className="d-flex flex-column min-vh-100">
-        
         <Navbar />
 
-        
         <main className="flex-grow-1 container mt-4">
           <Routes>
             <Route path="/" element={<Naslovnica />} />
@@ -31,12 +31,11 @@ function App() {
             <Route path="/users" element={<Users />} />
             <Route path="/profil" element={<Profil />} />
             <Route path="/korisnici" element={<Korisnici />} />
-           <Route path="/tecaj" element={<Tecaj />} />
+            <Route path="/tecaj" element={<Tecaj />} />
           </Routes>
         </main>
 
         <Footer />
-        
       </div>
     </Router>
   );
