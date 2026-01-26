@@ -1,0 +1,82 @@
+/* Navigacijski link s animacijom */
+.back-link {
+  text-decoration: none;
+  color: #6c757d;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.back-link:hover {
+  color: #007bff;
+  transform: translateX(-5px); /* Suptilni pomak ulijevo */
+}
+
+/* Meta podaci s ikonama */
+.post-meta-fancy {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  color: #6c757d;
+  font-size: 1rem;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+}
+
+.meta-separator {
+  color: #dee2e6;
+}
+
+/* Naslov s boljim razmakom */
+.post-title {
+  color: #212529;
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+}
+
+/* Sadržaj članka - SNR čitljivost */
+.post-content-section {
+  line-height: 1.8;
+  font-size: 1.15rem;
+  color: #333;
+  margin-top: 2rem;
+}
+
+/* Glavna slika (Featured Image) - SNR pristup */
+.post-featured-image {
+  display: block;
+  width: 100%;
+  max-width: 900px; /* Ograničavamo širinu da ne bude preogromna na desktopu */
+  height: 500px; /* Fiksna visina za uniformnost */
+  object-fit: cover; /* Reže sliku tako da uvijek ispuni prostor bez rastezanja */
+  object-position: center;
+  margin: 2rem auto; /* Centriranje slike */
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Slike unutar samog teksta (Content images) */
+.post-content-section img {
+  display: block;
+  max-width: 100%; /* Da nikad ne izađe iz okvira */
+  width: auto;
+  height: auto;
+  margin: 2rem auto; /* Centriranje slika u tekstu */
+  border-radius: 8px;
+}
+
+/* Responzivnost za manje ekrane */
+@media (max-width: 768px) {
+  .post-featured-image {
+    height: 300px; /* Smanjujemo visinu na mobitelima */
+  }
+
+  .post-title {
+    font-size: 2.5rem; /* Malo manji font za mobitele */
+  }
+}

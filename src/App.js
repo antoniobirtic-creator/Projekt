@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Naslovnica from "./pages/Naslovnica";
 import Blog from "./pages/Blog";
+import SinglePost from "./pages/SinglePost";
 import BlogSingle from "./pages/BlogSingle";
 import Onama from "./pages/Onama";
 import Kontakt from "./pages/Kontakt";
@@ -25,8 +26,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Naslovnica />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/post/:slug" element={<SinglePost />} />
             <Route path="/Onama" element={<Onama />} />
-            <Route path="/blog/mladen-grdovic" element={<BlogSingle />} />
             <Route path="/kontakt" element={<Kontakt />} />
             <Route path="/users" element={<Users />} />
             <Route path="/profil" element={<Profil />} />
