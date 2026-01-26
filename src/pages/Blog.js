@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link, useSearchParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
-import Loader from "./Loader";
+import SkeletonCard from "../components/SkeletonCard";
 import "./Blog.css";
 
 const Blog = () => {
@@ -95,14 +95,6 @@ const Blog = () => {
     setSearchParams(params);
   };
 
-  if (loading && page === 1) {
-    return (
-      <CenteredContainer>
-        <Loader />
-      </CenteredContainer>
-    );
-  }
-
   return (
     <div className="blog-page">
       <div className="container">
@@ -147,51 +139,64 @@ const Blog = () => {
         </div>
 
         <div className="row g-4">
-          {posts.length > 0 ? (
-            posts.map((post) => (
-              <div key={post.id} className="col-md-6 col-lg-4 d-flex">
-                <div className="blog-post shadow-sm w-100">
-                  <Link to={`/post/${post.slug}`}>
-                    <img
-                      src={
-                        post._embedded?.["wp:featuredmedia"]?.[0]?.media_details
-                          ?.sizes?.full?.source_url
-                      }
-                      alt={post.title.rendered}
-                      className="img-fluid rounded"
+          {loading && page === 1 ? (
+            Array(6)
+              .fill(0)
+              .map((_, i) => <SkeletonCard key={i} />)
+          ) : posts.length > 0 ? (
+            <>
+              {posts.map((post) => (
+                <div key={post.id} className="col-md-6 col-lg-4 d-flex">
+                  <div className="blog-post shadow-sm w-100">
+                    <Link to={`/post/${post.slug}`}>
+                      <img
+                        src={
+                          post._embedded?.["wp:featuredmedia"]?.[0]
+                            ?.media_details?.sizes?.full?.source_url
+                        }
+                        alt={post.title.rendered}
+                        className="img-fluid rounded"
+                      />
+                    </Link>
+                    <div className="categories-badge-wrapper mt-3">
+                      {post._embedded?.["wp:term"]?.[0]?.map((cat) => (
+                        <span
+                          key={cat.id}
+                          className="badge rounded-pill bg-danger-subtle text-danger me-1 fw-medium"
+                        >
+                          {cat.name}
+                        </span>
+                      ))}
+                    </div>
+                    <h2
+                      className="mt-2"
+                      dangerouslySetInnerHTML={{ __html: post.title.rendered }}
                     />
-                  </Link>
-                  <div className="categories-badge-wrapper mt-3">
-                    {post._embedded?.["wp:term"]?.[0]?.map((cat) => (
-                      <span
-                        key={cat.id}
-                        className="badge rounded-pill bg-danger-subtle text-danger me-1 fw-medium"
-                      >
-                        {cat.name}
-                      </span>
-                    ))}
+                    <div
+                      className="excerpt"
+                      dangerouslySetInnerHTML={{
+                        __html: post.excerpt.rendered,
+                      }}
+                    />
+                    <div className="meta text-muted small">
+                      Autor: {post._embedded?.author?.[0]?.name} |{" "}
+                      {new Date(post.date).toLocaleDateString("hr-HR")}
+                    </div>
+                    <Link
+                      to={`/post/${post.slug}`}
+                      className="btn btn-primary mt-3"
+                    >
+                      Pročitaj više
+                    </Link>
                   </div>
-                  <h2
-                    className="mt-2"
-                    dangerouslySetInnerHTML={{ __html: post.title.rendered }}
-                  />
-                  <div
-                    className="excerpt"
-                    dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
-                  />
-                  <div className="meta text-muted small">
-                    Autor: {post._embedded?.author?.[0]?.name} |{" "}
-                    {new Date(post.date).toLocaleDateString("hr-HR")}
-                  </div>
-                  <Link
-                    to={`/post/${post.slug}`}
-                    className="btn btn-primary mt-3"
-                  >
-                    Pročitaj više
-                  </Link>
                 </div>
-              </div>
-            ))
+              ))}
+
+              {loadingMore &&
+                Array(3)
+                  .fill(0)
+                  .map((_, i) => <SkeletonCard key={`more-${i}`} />)}
+            </>
           ) : (
             <div className="col-12 text-center my-5">
               <h3>Nema rezultata na serveru.</h3>
