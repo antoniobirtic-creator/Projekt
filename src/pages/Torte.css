@@ -1,0 +1,88 @@
+/* 1. Globalne tranzicije i efekti na kartici */
+.transition-all {
+  transition: all 0.3s ease-in-out;
+}
+
+.hover-shadow {
+  transition: all 0.3s ease-in-out;
+}
+
+.hover-shadow:hover {
+  transform: translateY(
+    -5px
+  ); /* Odabrao sam blažu varijantu od -5px jer izgleda elegantnije */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 2. Efekt na slici unutar kartice */
+.card-img-top {
+  transition: transform 0.5s ease;
+}
+
+.card:hover .card-img-top {
+  transform: scale(1.1);
+}
+
+/* 3. Layout kartice */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 200px; /* Osigurava uniformnost grida */
+}
+
+/* 4. Tipografija i interakcija naslova */
+.text-decoration-none {
+  text-decoration: none !important;
+}
+
+.hover-danger-text:hover .card-title {
+  color: #dc3545;
+  transition: color 0.2s ease;
+}
+
+/* 5. Kratki opis i razmaci */
+.card-text {
+  min-height: 50px;
+  margin-bottom: 20px;
+}
+
+/* 6. Podaci o torti (Cijena i Izrada) */
+.card-data-wrapper {
+  border-top: 1px solid #f0f0f0;
+  width: 100%;
+  margin-top: auto; /* Gura blok na dno */
+  padding-top: 15px;
+}
+
+.data-label {
+  display: block;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  color: #888;
+  letter-spacing: 0.8px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.price-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.time-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* 7. Gumb efekti */
+.btn-outline-danger {
+  transition: all 0.2s ease;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+  transform: scale(1.02);
+}

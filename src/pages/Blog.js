@@ -168,10 +168,17 @@ const Blog = () => {
                         </span>
                       ))}
                     </div>
-                    <h2
-                      className="mt-2"
-                      dangerouslySetInnerHTML={{ __html: post.title.rendered }}
-                    />
+                    <Link
+                      to={`/post/${post.slug}`}
+                      className="text-decoration-none text-dark hover-danger"
+                    >
+                      <h2
+                        className="mt-2 h4 fw-bold"
+                        dangerouslySetInnerHTML={{
+                          __html: post.title.rendered,
+                        }}
+                      />
+                    </Link>
                     <div
                       className="excerpt"
                       dangerouslySetInnerHTML={{

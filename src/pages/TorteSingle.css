@@ -1,0 +1,45 @@
+.torte-single-page {
+  background-color: #fff;
+  min-height: 100vh;
+}
+
+.image-wrapper {
+  transition: transform 0.3s ease;
+}
+
+.image-wrapper:hover {
+  transform: scale(1.02);
+}
+
+.uppercase-badge {
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  padding: 6px 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  background-color: rgba(220, 53, 69, 0.1) !important;
+}
+
+.data-box {
+  border-color: #f0f0f0 !important;
+}
+
+/* Stil za glavni sadržaj iz WordPress editora */
+.content-rich {
+  line-height: 1.8;
+  color: #444;
+  font-size: 1.1rem;
+}
+
+.content-rich p {
+  margin-bottom: 1.5rem;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  font-weight: bold;
+  color: #dc3545;
+}

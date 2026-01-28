@@ -13,6 +13,8 @@ import Kontakt from "./pages/Kontakt";
 import Users from "./components/Users";
 import Profil from "./components/zadaci/Profil";
 import Korisnici from "./components/zadaci/Korisnici";
+import Torte from "./pages/Torte";
+import TorteSingle from "./pages/TorteSingle";
 import Tecaj from "./components/Tecaj";
 
 function App() {
@@ -31,6 +33,8 @@ function App() {
             <Route path="/kontakt" element={<Kontakt />} />
             <Route path="/users" element={<Users />} />
             <Route path="/profil" element={<Profil />} />
+            <Route path="/torte" element={<Torte />} />
+            <Route path="/torta/:slug" element={<TorteSingle />} />
             <Route path="/korisnici" element={<Korisnici />} />
             <Route path="/tecaj" element={<Tecaj />} />
           </Routes>
