@@ -1,14 +1,10 @@
+/* --- OSNOVNI WRAPPER --- */
 .kontakt-page-wrapper {
   min-height: 100vh;
-
   background: linear-gradient(-45deg, #ffffff, #fdf2f4, #f8f9fa, #ffffff);
-
   background-size: 400% 400%;
-
   animation: gradientShift 15s ease infinite;
-
   display: flex;
-
   align-items: center;
 }
 
@@ -16,267 +12,157 @@
   0% {
     background-position: 0% 50%;
   }
-
   50% {
     background-position: 100% 50%;
   }
-
   100% {
     background-position: 0% 50%;
   }
 }
 
-.content-card {
+.kontakt-page-wrapper .content-card {
   background: rgba(255, 255, 255, 0.95);
-
   backdrop-filter: blur(10px);
 }
 
-/* Stil za klikabilne redove (Address, Phone, Email) */
-
-.clickable-item {
-  text-decoration: none !important;
-
+/* --- INFO ITEMS (Address, Phone, Email) --- */
+/* Koristimo specifičnost da maknemo underline bez !important */
+.kontakt-page-wrapper .clickable-item {
+  text-decoration: none;
   display: flex;
-
+  align-items: center; /* Dodano za bolje poravnanje */
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-
   padding: 12px;
-
   border-radius: 15px;
-
-  margin-left: -12px; /* Poravnanje zbog paddinga */
+  margin-left: -12px;
 }
 
-.clickable-item:hover {
+.kontakt-page-wrapper .clickable-item:hover {
   background: rgba(255, 71, 87, 0.05);
-
   transform: translateX(10px);
 }
 
-.icon-box {
+.kontakt-page-wrapper .icon-box {
   width: 48px;
-
   height: 48px;
-
   background: #fff;
-
   color: #ff4757;
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
   border-radius: 12px;
-
   font-size: 1.2rem;
-
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-
   transition: all 0.3s ease;
-
   flex-shrink: 0;
 }
 
-.clickable-item:hover .icon-box {
+.kontakt-page-wrapper .clickable-item:hover .icon-box {
   background: #ff4757;
-
   color: #fff;
-
   transform: scale(1.1) rotate(8deg);
 }
 
-.info-item h6 {
+.kontakt-page-wrapper .info-item h6 {
   margin-bottom: 2px;
-
   font-weight: 800;
-
   color: #2f3542;
-
   font-size: 0.9rem;
-
   text-transform: uppercase;
-
   letter-spacing: 0.5px;
 }
 
-.info-item p {
+.kontakt-page-wrapper .info-item p {
   margin: 0;
-
   color: #747d8c;
-
-  font-size: 1rem;
 }
 
 .pre-line {
   white-space: pre-line;
 }
 
-.social-grid {
+/* --- SOCIAL GRID --- */
+.kontakt-page-wrapper .social-grid {
   display: grid;
-
-  /* Kažemo mu da automatski slaže elemente vodoravno */
-
   grid-auto-flow: column;
-
-  /* Određujemo širinu stupca prema sadržaju */
-
   grid-auto-columns: max-content;
-
   gap: 12px;
-
   align-items: center;
 }
 
-/* Social Pills */
-
-.social-pill {
+/* --- SOCIAL PILLS --- */
+.kontakt-page-wrapper .social-pill {
   display: flex;
-
   align-items: center;
-
   gap: 8px;
-
   padding: 10px 20px;
-
   background: #ffffff;
-
   border-radius: 50px;
-
   text-decoration: none;
-
   color: #2f3542;
-
   font-weight: 600;
-
   font-size: 0.95rem;
-
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-
-  /* SPRJEČAVA PRELAMAJUĆI TEKST */
-
   white-space: nowrap;
-}
-
-.social-pill:hover {
-  transform: translateY(-5px);
-
-  color: #fff !important;
-}
-
-.social-pill.fb:hover {
-  background: #1877f2;
-}
-
-.social-pill.ig:hover {
-  background: linear-gradient(
-    45deg,
-    #f09433 0%,
-
-    #e6683c 25%,
-
-    #dc2743 50%,
-
-    #cc2366 75%,
-
-    #bc1888 100%
-  );
-}
-
-.social-pill.wa:hover {
-  background: #25d366;
-}
-
-/* Fix za mobitele - ako ne stanu svi, neka se prebace u novi red */
-
-@media (max-width: 480px) {
-  .social-grid {
-    grid-auto-flow: row; /* Na mobitelu idu jedan ispod drugog */
-
-    grid-template-columns: 1fr;
-  }
-}
-
-.delivery-card {
-  background: #f8f9fa;
-
-  border-left: 4px solid #ff4757;
-
-  color: #57606f;
-}
-
-.social-pills-container {
-  display: flex !important;
-
-  flex-direction: row !important; /* Forsira horizontalni niz */
-
-  align-items: center;
-
-  justify-content: flex-start;
-}
-
-.social-pill {
-  display: flex;
-
-  align-items: center;
-
-  gap: 8px;
-
-  padding: 10px 18px;
-
-  background: #ffffff;
-
-  border-radius: 20px;
-
-  white-space: nowrap;
-
-  text-decoration: none;
-
-  color: #2f3542;
-
-  font-weight: 600;
-
-  font-size: 0.9rem;
-
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-
-  transition: all 0.3s ease;
-
   border: 1px solid #f1f2f6;
+  transition: all 0.3s ease;
 }
 
-/* Hover efekti */
-
-.social-pill:hover {
-  transform: translateY(-3px);
-
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-
-  color: #fff !important;
+/* Hover  */
+.kontakt-page-wrapper .social-pill:hover {
+  transform: translateY(-5px);
+  color: #ffffff;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
-.social-pill.fb:hover {
-  background-color: #1877f2;
-
+.kontakt-page-wrapper .social-pill.fb:hover {
+  background: #1877f2;
   border-color: #1877f2;
 }
-
-.social-pill.ig:hover {
-  background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
-
+.kontakt-page-wrapper .social-pill.ig:hover {
+  background: linear-gradient(45deg, #f09433 0%, #dc2743 50%, #bc1888 100%);
   border-color: transparent;
 }
-
-.social-pill.wa:hover {
-  background-color: #25d366;
-
+.kontakt-page-wrapper .social-pill.wa:hover {
+  background: #25d366;
   border-color: #25d366;
 }
 
-/* Razmak između ikone i teksta */
-
-.social-pill svg {
+/* Razmak unutar ikone */
+.kontakt-page-wrapper .social-pill svg {
   font-size: 1.1rem;
+}
+
+/* --- DOSTAVA KARTICA --- */
+.kontakt-page-wrapper .delivery-card {
+  background: #f8f9fa;
+  border-left: 4px solid #ff4757;
+  color: #57606f;
+}
+
+/* Animacija za kamiončić */
+@keyframes truckDrive {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(8px);
+  } /* Suptilno pomicanje desno */
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Primjena na ikonu unutar delivery kartice */
+.kontakt-page-wrapper .delivery-card svg {
+  animation: truckDrive 2s ease-in-out infinite;
+  display: inline-block; /* Obavezno da bi transform radio */
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 576px) {
+  .kontakt-page-wrapper .social-grid {
+    grid-auto-flow: row;
+    grid-template-columns: 1fr;
+  }
 }
