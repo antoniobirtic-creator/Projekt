@@ -17,6 +17,7 @@ import Torte from "./pages/Torte";
 import BlogPredavanje from "./pages/BlogPredavanje";
 import TorteSingle from "./pages/TorteSingle";
 import Tecaj from "./components/Tecaj";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
@@ -41,7 +42,7 @@ function App() {
             <Route path="/tecaj" element={<Tecaj />} />
           </Routes>
         </main>
-
+        <ScrollToTop />
         <Footer />
       </div>
     </Router>

@@ -1,73 +1,55 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import ReactPaginate from "react-paginate";
 import "./BlogPredavanje.css";
 
-/**
- * BlogPredavanje komponenta služi za dinamički prikaz postova s WordPress API-ja.
- * Podržava kombinirano filtriranje po kategorijama i autorima koristeći REST API parametre.
- */
 const BlogPredavanje = () => {
-  // --- STATE MANAGEMENT ---
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [users, setUsers] = useState([]);
-
-  // Filteri se inicijaliziraju na null (prikaz svih podataka)
   const [selectedUser, setSelectedUser] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pageCount, setPageCount] = useState(0);
 
-  /**
-   * Inicijalno dohvaćanje taksonomija (kategorije) i resursa (korisnici).
-   * Izvršava se samo jednom pri montiranju komponente (Mounting).
-   */
   useEffect(() => {
-    // Dohvaćanje kategorija za filtriranje
     fetch("https://front2.edukacija.online/backend/wp-json/wp/v2/categories")
       .then((res) => res.json())
-      .then((data) => setCategories(data))
-      .catch((err) =>
-        console.error("Kritična greška pri dohvatu kategorija:", err),
-      );
+      .then((data) => setCategories(data));
 
-    // Dohvaćanje autora - povećan limit na 20 radi izbjegavanja paginacije na malim setovima
     fetch(
       "https://front2.edukacija.online/backend/wp-json/wp/v2/users?per_page=20",
     )
       .then((res) => res.json())
-      .then((data) => setUsers(data))
-      .catch((err) =>
-        console.error("Kritična greška pri dohvatu korisnika:", err),
-      );
+      .then((data) => setUsers(data));
   }, []);
 
-  /**
-   * Glavni Data Fetching Effect.
-   * Ovisi o stanju filtera. Koristi Template Literals za dinamičku izgradnju URL-a.
-   */
   useEffect(() => {
     setLoading(true);
 
-    // Base URL s uključenim _embed parametrom za dohvaćanje slika i autora u jednom pozivu
-    let url =
-      "https://front2.edukacija.online/backend/wp-json/wp/v2/posts?_embed";
+    const per_page = 9;
+    let url = `https://front2.edukacija.online/backend/wp-json/wp/v2/posts?_embed&per_page=${per_page}&page=${currentPage + 1}`;
 
-    // Dinamičko dodavanje Query parametara (SNR pristup)
     if (selectedCategory) url += `&categories=${selectedCategory}`;
     if (selectedUser) url += `&author=${selectedUser}`;
 
     fetch(url)
-      .then((res) => res.json())
+      .then((res) => {
+        const totalPages = res.headers.get("X-WP-TotalPages");
+        setPageCount(totalPages ? Number(totalPages) : 0);
+
+        return res.json();
+      })
       .then((data) => {
-        // Defensive programming: osiguravamo da je data uvijek niz prije mapiranja
         setPosts(Array.isArray(data) ? data : []);
       })
-      .catch(() => {
-        // U slučaju greške čistimo prikaz da izbjegnemo prikaz starih/pogrešnih podataka
+      .catch((err) => {
+        console.error("Greška pri dohvatu:", err);
         setPosts([]);
       })
       .finally(() => setLoading(false));
-  }, [selectedCategory, selectedUser]); // Effect se ponovno pokreće na svaku promjenu filtera
+  }, [selectedCategory, selectedUser, currentPage]);
 
   return (
     <div className="blog-page">
@@ -216,6 +198,36 @@ const BlogPredavanje = () => {
             </div>
           )}
         </div>
+        {pageCount > 1 && (
+          <div className="pagination-wrapper d-flex justify-content-center my-5">
+            <ReactPaginate
+              previousLabel={"Prethodna"}
+              nextLabel={"Sljedeća"}
+              breakLabel={"..."}
+              pageCount={pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={3}
+              onPageChange={(data) => {
+                setCurrentPage(data.selected);
+                window.scrollTo({
+                  top: 0,
+                  behavior: "smooth",
+                });
+              }}
+              containerClassName={"pagination"}
+              pageClassName={"page-item"}
+              pageLinkClassName={"page-link"}
+              previousClassName={"page-item"}
+              previousLinkClassName={"page-link"}
+              nextClassName={"page-item"}
+              nextLinkClassName={"page-link"}
+              breakClassName={"page-item"}
+              breakLinkClassName={"page-link"}
+              activeClassName={"active"}
+              forcePage={currentPage}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
