@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import styled from "styled-components";
 import { Link, useSearchParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,7 +6,24 @@ import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
 import SkeletonCard from "../components/SkeletonCard";
 import "./Blog.css";
 
+// --- KONFIGURACIJA ---
+const API_BASE_URL = "https://front2.edukacija.online/backend/wp-json/wp/v2";
+const POSTS_PER_PAGE = 6;
+
+// --- POMOĆNE FUNKCIJE ---
+const buildPostsUrl = (page, search, categoryId) => {
+  const params = new URLSearchParams({
+    _embed: "1",
+    per_page: POSTS_PER_PAGE,
+    page: page,
+  });
+  if (search) params.append("search", search);
+  if (categoryId) params.append("categories", categoryId);
+  return `${API_BASE_URL}/posts?${params.toString()}`;
+};
+
 const Blog = () => {
+  // State-ovi
   const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,79 +31,83 @@ const Blog = () => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
+  // URL Params & Search logic
   const [searchParams, setSearchParams] = useSearchParams();
   const searchTerm = searchParams.get("search") || "";
   const selectedCategory = searchParams.get("category") || "Sve";
-
-  // State za "debounced" search pojam kako ne bismo slali fetch na svako slovo
   const [debouncedSearch, setDebouncedSearch] = useState(searchTerm);
 
-  const postsPerPage = 6;
+  // Infinite Scroll Ref
+  const observerRef = useRef();
 
-  // 1. Debounce logika: Čekamo 500ms nakon što korisnik prestane tipkati
+  // 1. Debounce Search
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearch(searchTerm);
-    }, 500);
+    const timer = setTimeout(() => setDebouncedSearch(searchTerm), 500);
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
-  // 2. Fetch Kategorija (samo jednom pri loadu)
+  // 2. Fetch Kategorija
   useEffect(() => {
-    fetch("https://front2.edukacija.online/backend/wp-json/wp/v2/categories")
+    fetch(`${API_BASE_URL}/categories`)
       .then((res) => res.json())
       .then((data) => setCategories(data))
       .catch((err) => console.error("Greška kategorije:", err));
   }, []);
 
-  // 3. SNR SERVER-SIDE FILTERING: Poziva se na promjenu kategorije ili debounced searcha
+  // 3. Centralizirani Fetch (SNR pristup s async/await)
+  const fetchPosts = useCallback(
+    async (targetPage, isMore = false) => {
+      const categoryId = categories.find(
+        (c) => c.name === selectedCategory,
+      )?.id;
+      const url = buildPostsUrl(targetPage, debouncedSearch, categoryId);
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("Neuspješan fetch");
+        const data = await response.json();
+
+        setPosts((prev) => (isMore ? [...prev, ...data] : data));
+        setHasMore(data.length === POSTS_PER_PAGE);
+      } catch (err) {
+        console.error("Greška:", err);
+        if (!isMore) setPosts([]);
+      } finally {
+        setLoading(false);
+        setLoadingMore(false);
+      }
+    },
+    [debouncedSearch, selectedCategory, categories],
+  );
+
+  // Reset na promjenu filtera
   useEffect(() => {
     setLoading(true);
     setPage(1);
-    setHasMore(true);
+    fetchPosts(1, false);
+  }, [debouncedSearch, selectedCategory, categories, fetchPosts]);
 
-    // Nađemo ID kategorije jer WP API ne prima ime nego ID
-    const categoryId = categories.find((c) => c.name === selectedCategory)?.id;
+  // 4. INFINITE SCROLL LOGIKA (Intersection Observer)
+  const lastElementRef = useCallback(
+    (node) => {
+      if (loading || loadingMore) return;
+      if (observerRef.current) observerRef.current.disconnect();
 
-    let url = `https://front2.edukacija.online/backend/wp-json/wp/v2/posts?_embed&per_page=${postsPerPage}&page=1`;
-    if (debouncedSearch)
-      url += `&search=${encodeURIComponent(debouncedSearch)}`;
-    if (categoryId) url += `&categories=${categoryId}`;
+      observerRef.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setLoadingMore(true);
+          setPage((prevPage) => {
+            const nextPage = prevPage + 1;
+            fetchPosts(nextPage, true);
+            return nextPage;
+          });
+        }
+      });
 
-    fetch(url)
-      .then((res) => {
-        if (!res.ok) return [];
-        return res.json();
-      })
-      .then((data) => {
-        setPosts(data);
-        if (data.length < postsPerPage) setHasMore(false);
-      })
-      .catch(() => setPosts([]))
-      .finally(() => setLoading(false));
-  }, [debouncedSearch, selectedCategory, categories]);
-
-  // 4. Load More funkcija (isto ide na server)
-  const loadMorePosts = () => {
-    setLoadingMore(true);
-    const nextPage = page + 1;
-    const categoryId = categories.find((c) => c.name === selectedCategory)?.id;
-
-    let url = `https://front2.edukacija.online/backend/wp-json/wp/v2/posts?_embed&per_page=${postsPerPage}&page=${nextPage}`;
-    if (debouncedSearch)
-      url += `&search=${encodeURIComponent(debouncedSearch)}`;
-    if (categoryId) url += `&categories=${categoryId}`;
-
-    fetch(url)
-      .then((res) => res.json())
-      .then((newData) => {
-        if (newData.length < postsPerPage) setHasMore(false);
-        setPosts((prev) => [...prev, ...newData]);
-        setPage(nextPage);
-      })
-      .catch(() => setHasMore(false))
-      .finally(() => setLoadingMore(false));
-  };
+      if (node) observerRef.current.observe(node);
+    },
+    [loading, loadingMore, hasMore, fetchPosts],
+  );
 
   const updateFilters = (newCategory, newSearch) => {
     const params = {};
@@ -98,14 +119,14 @@ const Blog = () => {
   return (
     <div className="blog-page">
       <div className="container">
+        {/* Header & Search */}
         <div className="d-flex flex-column flex-lg-row justify-content-between align-items-start align-items-lg-center my-4 gap-3">
           <h1 className="m-0">Šareni Blog Iz WordPress</h1>
-
           <div className="search-wrapper">
             <FontAwesomeIcon icon={faSearch} className="search-icon" />
             <input
               type="text"
-              placeholder="Pretraži cijelu bazu..."
+              placeholder="Pretraži..."
               className="form-control search-input"
               value={searchTerm}
               onChange={(e) => updateFilters(selectedCategory, e.target.value)}
@@ -121,6 +142,7 @@ const Blog = () => {
           </div>
         </div>
 
+        {/* Kategorije */}
         <div className="category-filters d-flex flex-wrap gap-2 mb-4">
           <button
             className={`btn btn-sm ${selectedCategory === "Sve" ? "btn-danger" : "btn-outline-danger"}`}
@@ -138,6 +160,7 @@ const Blog = () => {
           ))}
         </div>
 
+        {/* Grid s postovima */}
         <div className="row g-4">
           {loading && page === 1 ? (
             Array(6)
@@ -147,7 +170,7 @@ const Blog = () => {
             <>
               {posts.map((post) => (
                 <div key={post.id} className="col-md-6 col-lg-4 d-flex">
-                  <div className="blog-post shadow-sm w-100">
+                  <div className="blog-post shadow-sm w-100 p-3 bg-white rounded">
                     <Link to={`/post/${post.slug}`}>
                       <img
                         src={
@@ -155,96 +178,48 @@ const Blog = () => {
                             ?.media_details?.sizes?.full?.source_url
                         }
                         alt={post.title.rendered}
-                        className="img-fluid rounded"
+                        className="img-fluid rounded mb-3"
                       />
                     </Link>
-                    <div className="categories-badge-wrapper mt-3">
-                      {post._embedded?.["wp:term"]?.[0]?.map((cat) => (
-                        <span
-                          key={cat.id}
-                          className="badge rounded-pill bg-danger-subtle text-danger me-1 fw-medium"
-                        >
-                          {cat.name}
-                        </span>
-                      ))}
-                    </div>
-                    <Link
-                      to={`/post/${post.slug}`}
-                      className="text-decoration-none text-dark hover-danger"
-                    >
-                      <h2
-                        className="mt-2 h4 fw-bold"
-                        dangerouslySetInnerHTML={{
-                          __html: post.title.rendered,
-                        }}
-                      />
-                    </Link>
+                    <h2
+                      className="h4 fw-bold"
+                      dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+                    />
                     <div
                       className="excerpt"
                       dangerouslySetInnerHTML={{
                         __html: post.excerpt.rendered,
                       }}
                     />
-                    <div className="meta text-muted small">
-                      Autor: {post._embedded?.author?.[0]?.name} |{" "}
-                      {new Date(post.date).toLocaleDateString("hr-HR")}
-                    </div>
                     <Link
                       to={`/post/${post.slug}`}
-                      className="btn btn-primary mt-3"
+                      className="btn btn-primary mt-auto"
                     >
                       Pročitaj više
                     </Link>
                   </div>
                 </div>
               ))}
-
-              {loadingMore &&
-                Array(3)
-                  .fill(0)
-                  .map((_, i) => <SkeletonCard key={`more-${i}`} />)}
             </>
           ) : (
             <div className="col-12 text-center my-5">
-              <h3>Nema rezultata na serveru.</h3>
-              <button
-                className="btn btn-link text-danger"
-                onClick={() => setSearchParams({})}
-              >
-                Poništi sve filtere
-              </button>
+              <h3>Nema rezultata.</h3>
             </div>
           )}
         </div>
 
-        {hasMore && posts.length >= postsPerPage && (
-          <div className="text-center my-5">
-            <button
-              className="btn btn-outline-primary btn-lg px-5"
-              onClick={loadMorePosts}
-              disabled={loadingMore}
-            >
-              {loadingMore ? (
-                <>
-                  <span className="spinner-border spinner-border-sm me-2"></span>{" "}
-                  Učitavam...
-                </>
-              ) : (
-                "Učitaj više"
-              )}
-            </button>
-          </div>
-        )}
+        {/* INFINITE SCROLL TARGET */}
+        <div ref={lastElementRef} style={{ height: "20px", margin: "20px 0" }}>
+          {loadingMore && (
+            <div className="text-center">
+              <div className="spinner-border text-danger" role="status"></div>
+              <p>Učitavam nove torte...</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
 };
-
-const CenteredContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80vh;
-`;
 
 export default Blog;

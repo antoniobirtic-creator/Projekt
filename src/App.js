@@ -14,6 +14,7 @@ import Users from "./components/Users";
 import Profil from "./components/zadaci/Profil";
 import Korisnici from "./components/zadaci/Korisnici";
 import Torte from "./pages/Torte";
+import BlogPredavanje from "./pages/BlogPredavanje";
 import TorteSingle from "./pages/TorteSingle";
 import Tecaj from "./components/Tecaj";
 
@@ -34,6 +35,7 @@ function App() {
             <Route path="/users" element={<Users />} />
             <Route path="/profil" element={<Profil />} />
             <Route path="/torte" element={<Torte />} />
+            <Route path="/blog-predavanje" element={<BlogPredavanje />} />
             <Route path="/torta/:slug" element={<TorteSingle />} />
             <Route path="/korisnici" element={<Korisnici />} />
             <Route path="/tecaj" element={<Tecaj />} />
