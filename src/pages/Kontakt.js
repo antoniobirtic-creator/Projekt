@@ -95,12 +95,12 @@ const Kontakt = () => {
                 </a>
 
                 {/* RADNO VRIJEME */}
-                <div className="info-item mb-4">
-                  <div className="icon-box">
+                <div className="info-item clickable-item mb-4">
+                  <div className="icon-box me-2">
                     <FaClock />
                   </div>
                   <div>
-                    <h6>Radno vrijeme</h6>
+                    <h6 className="text-center">Radno vrijeme</h6>
                     <p className="pre-line">{info.radno_vrijeme}</p>
                   </div>
                 </div>
