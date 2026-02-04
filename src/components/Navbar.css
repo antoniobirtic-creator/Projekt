@@ -1,5 +1,4 @@
-/* Navbar.css */
-
+/* --- POSTOJEĆI HAMBURGER KOD --- */
 .hamburger {
   cursor: pointer;
   width: 45px;
@@ -18,7 +17,7 @@
 
 .line {
   fill: none;
-  stroke: white; /* Bijela boja za tamni navbar */
+  stroke: white;
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 3;
@@ -38,4 +37,59 @@
 .hamburger input:checked + svg .line-top-bottom {
   stroke-dasharray: 20 300;
   stroke-dashoffset: -32.42;
+}
+
+/* --- NOVI SNR HOVER EFEKTI --- */
+
+/* Osnovni stil za linkove da bi tranzicija bila glatka */
+.nav-link {
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  opacity: 0.8; /* Blago prozirni kad nisu aktivni */
+}
+
+/* Desktop Hover efekti */
+@media (min-width: 992px) {
+  .nav-link:hover {
+    opacity: 1;
+    color: #fff !important;
+    transform: translateY(-2px); /* Lagani "lift" efekt */
+  }
+
+  /* Efekt linije koja se širi ispod teksta na hover */
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: #ff4757; /* Danger boja ili tvoja primarna */
+    transition: all 0.3s ease-in-out;
+    transform: translateX(-50%);
+  }
+
+  .nav-link:hover::after {
+    width: 80%; /* Linija se širi iz sredine */
+  }
+
+  /* Ako je link već aktivan, ne treba nam dupla linija od hovera */
+  .nav-link.active::after {
+    display: none;
+  }
+}
+
+/* Popravak za fiksni navbar (da sadržaj stranice ne ode ispod) */
+body {
+  padding-top: 70px;
+}
+
+/* Mobilna verzija - ljepši razmaci kad je izbornik otvoren */
+@media (max-width: 991px) {
+  .navbar-collapse {
+    background: rgba(33, 37, 41, 0.98); /* Tamna pozadina za bolju čitljivost */
+    border-radius: 0 0 15px 15px;
+    margin-top: 10px;
+    padding: 20px;
+  }
 }

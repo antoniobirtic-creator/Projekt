@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navRef = useRef(null); // Referenca za detekciju klika izvan navbara
 
-  // Vraćamo sve tvoje rute u niz
   const links = [
     { path: "/", label: "Početna" },
     { path: "/blog", label: "Blog" },
     { path: "/blog-predavanje", label: "BlogPredavanje" },
     { path: "/Onama", label: "O nama" },
     { path: "/kontakt", label: "Kontakt" },
+    { path: "/form", label: "Form" },
     { path: "/torte", label: "Torte" },
     { path: "/users", label: "Users" },
-
     { path: "/profil", label: "Profil" },
     { path: "/korisnici", label: "Korisnici" },
     { path: "/tecaj", label: "Tečajna lista" },
@@ -23,14 +23,56 @@ const Navbar = () => {
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
 
+  // SNR Logic: Zatvaranje izbornika klikom sa strane ili tipkom Escape
+  useEffect(() => {
+    const handleGlobalEvents = (event) => {
+      // 1. Provjera klika izvan navbara
+      const isOutsideClick =
+        isOpen && navRef.current && !navRef.current.contains(event.target);
+
+      // 2. Provjera tipke Escape
+      const isEscKey = event.key === "Escape";
+
+      if (isOutsideClick || isEscKey) {
+        closeMenu();
+      }
+    };
+
+    // Dodajemo listenere samo kada je izbornik otvoren (optimizacija)
+    if (isOpen) {
+      document.addEventListener("mousedown", handleGlobalEvents);
+      document.addEventListener("keydown", handleGlobalEvents);
+    }
+
+    // Cleanup funkcija: obavezno micanje listenera (sprječava memory leak)
+    return () => {
+      document.removeEventListener("mousedown", handleGlobalEvents);
+      document.removeEventListener("keydown", handleGlobalEvents);
+    };
+  }, [isOpen]);
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+    <nav
+      className="navbar navbar-expand-lg navbar-dark bg-dark shadow fixed-top"
+      ref={navRef}
+    >
       <div className="container">
-        <NavLink className="navbar-brand" to="/" onClick={closeMenu}>
-          <img src="img/logo.jpg" alt="logo" height="20" className="me-2" />
-          PRO-App
+        {/* LOGO */}
+        <NavLink
+          className="navbar-brand d-flex align-items-center"
+          to="/"
+          onClick={closeMenu}
+        >
+          <img
+            src="img/logo.jpg"
+            alt="logo"
+            height="30"
+            className="me-2 rounded shadow-sm"
+          />
+          <span className="fw-bold">PRO-App</span>
         </NavLink>
 
+        {/* HAMBURGER (Custom SVG) */}
         <label className="hamburger d-lg-none">
           <input type="checkbox" checked={isOpen} onChange={toggleMenu} />
           <svg viewBox="0 0 32 32">
@@ -42,11 +84,12 @@ const Navbar = () => {
           </svg>
         </label>
 
+        {/* NAVIGATION LINKS */}
         <div
           className={`collapse navbar-collapse ${isOpen ? "show" : ""}`}
           id="navbarNav"
         >
-          <ul className="navbar-nav ms-auto">
+          <ul className="navbar-nav ms-auto text-end py-3 py-lg-0">
             {links.map((link) => (
               <li className="nav-item" key={link.path}>
                 <NavLink
@@ -54,9 +97,11 @@ const Navbar = () => {
                   end
                   onClick={closeMenu}
                   className={({ isActive }) =>
-                    isActive
-                      ? "nav-link active fw-bold border-bottom border-danger pb-2"
-                      : "nav-link pb-2"
+                    `nav-link px-3 pb-2 transition-all ${
+                      isActive
+                        ? "active fw-bold border-bottom border-danger text-white"
+                        : "text-white-50"
+                    }`
                   }
                 >
                   {link.label}
