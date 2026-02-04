@@ -17,14 +17,14 @@ const Navbar = () => {
     { path: "/form", label: "Form" },
     { path: "/torte", label: "Torte" },
     { path: "/users", label: "Users" },
+    { path: "/profil", label: "Profil" },
+    { path: "/korisnici", label: "Korisnici" },
+    { path: "/tecaj", label: "Tečajna lista" },
     {
       path: "/admin-dashboard",
       label: <FontAwesomeIcon icon={faRightToBracket} title="Admin Prijava" />,
       isIcon: true,
     },
-    { path: "/profil", label: "Profil" },
-    { path: "/korisnici", label: "Korisnici" },
-    { path: "/tecaj", label: "Tečajna lista" },
   ];
 
   const toggleMenu = () => setIsOpen(!isOpen);

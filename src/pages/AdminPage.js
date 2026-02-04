@@ -13,7 +13,7 @@ const AdminPage = () => {
       const auth = localStorage.getItem("adminAuth");
 
       try {
-        // Primjer: Dohvaćanje tvojih postova (možemo prilagoditi za contact form poruke)
+        // Primjer: Dohvaćanje tvojih postova
         const response = await fetch(
           "https://front2.edukacija.online/backend/wp-json/wp/v2/posts?status=any",
           {
