@@ -1,0 +1,113 @@
+.admin-dashboard {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: "Inter", sans-serif;
+  color: #2d3436;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #f1f2f6;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+}
+
+.admin-header h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #2d3436;
+}
+
+/* Logout Gumb */
+.btn-logout {
+  background-color: #ff4757;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+  background-color: #ff6b81;
+  transform: translateY(-1px);
+}
+
+/* Tablica s podacima */
+.posts-list {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  overflow: hidden; /* Da border-radius siječe rubove tablice */
+}
+
+.posts-list h2 {
+  padding: 20px;
+  margin: 0;
+  background: #f8f9fa;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #eee;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th,
+td {
+  padding: 15px 20px;
+  border-bottom: 1px solid #f1f2f6;
+}
+
+th {
+  background-color: #f8f9fa;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  color: #747d8c;
+}
+
+tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* Status Bedževi */
+.status-publish {
+  background-color: #2ecc7122;
+  color: #27ae60;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.status-future,
+.status-draft {
+  background-color: #f1c40f22;
+  color: #f39c12;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* Responzivnost */
+@media (max-width: 768px) {
+  .admin-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+  }
+}

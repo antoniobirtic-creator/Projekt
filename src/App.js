@@ -13,6 +13,9 @@ import Kontakt from "./pages/Kontakt";
 import Users from "./components/Users";
 import Profil from "./components/zadaci/Profil";
 import Korisnici from "./components/zadaci/Korisnici";
+import SignIn from "./pages/SignIn";
+import AdminPage from "./pages/AdminPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Torte from "./pages/Torte";
 import Form from "./pages/Form";
 import BlogPredavanje from "./pages/BlogPredavanje";
@@ -40,7 +43,17 @@ function App() {
             <Route path="/form" element={<Form />} />
             <Route path="/blog-predavanje" element={<BlogPredavanje />} />
             <Route path="/torta/:slug" element={<TorteSingle />} />
+            <Route
+              path="/admin-dashboard"
+              element={
+                <ProtectedRoute>
+                  <AdminPage />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/korisnici" element={<Korisnici />} />
+            <Route path="/signin" element={<SignIn />} />
+
             <Route path="/tecaj" element={<Tecaj />} />
           </Routes>
         </main>
