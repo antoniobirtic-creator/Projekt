@@ -1,0 +1,33 @@
+.register-wrapper {
+  background-color: #f8f9fa; /* Match tvoje slike */
+  min-height: calc(100vh - 70px); /* Prilagodi visini tvog navbara */
+}
+
+.register-card {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 20px !important;
+  margin: 30px auto;
+  background-color: #fff;
+}
+
+.register-card .input-group-text {
+  border-radius: 10px 0 0 10px;
+}
+
+.register-card .form-control {
+  border-radius: 0 10px 10px 0;
+  padding: 10px 15px;
+}
+
+/* Uklanjanje plavog outline-a za bolji dizajn */
+.form-control:focus {
+  box-shadow: none;
+  border-color: #ced4da;
+  background-color: #fff !important;
+}
+
+.btn-dark {
+  border-radius: 10px;
+  background-color: #2b3035; /* Prati boju tvog "Prijavi se" gumba */
+}

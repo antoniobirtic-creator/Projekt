@@ -4,10 +4,4 @@ body {
 
 p {
   font-family: Arial, sans-serif;
-  text-align: center;
-}
-
-a.wp-block-button__link.wp-element-button {
-  color: initial;
-  background-color: blueviolet;
 }

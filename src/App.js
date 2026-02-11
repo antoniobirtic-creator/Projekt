@@ -17,10 +17,12 @@ import SignIn from "./pages/SignIn";
 import AdminPage from "./pages/AdminPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Torte from "./pages/Torte";
+import Stranica from "./pages/StranicaVjezba";
 import Form from "./pages/Form";
 import BlogPredavanje from "./pages/BlogPredavanje";
 import TorteSingle from "./pages/TorteSingle";
 import Tecaj from "./components/Tecaj";
+import Register from "./pages/Register";
 import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
@@ -39,7 +41,9 @@ function App() {
             <Route path="/kontakt" element={<Kontakt />} />
             <Route path="/users" element={<Users />} />
             <Route path="/profil" element={<Profil />} />
+            <Route path="/stranica" element={<Stranica />} />
             <Route path="/torte" element={<Torte />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/form" element={<Form />} />
             <Route path="/blog-predavanje" element={<BlogPredavanje />} />
             <Route path="/torta/:slug" element={<TorteSingle />} />
