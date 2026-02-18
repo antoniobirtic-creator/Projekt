@@ -1,0 +1,25 @@
+.profile-tab {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.profile-tab textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--input-bg);
+  font-family: inherit;
+  resize: vertical;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

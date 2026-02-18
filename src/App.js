@@ -23,6 +23,12 @@ import BlogPredavanje from "./pages/BlogPredavanje";
 import TorteSingle from "./pages/TorteSingle";
 import Tecaj from "./components/Tecaj";
 import Register from "./pages/Register";
+import Admin from "./pages/Admin";
+import Profile from "./components/Profile";
+import Password from "./components/Password";
+import Team from "./components/Team";
+import MyDetails from "./components/MyDetails";
+import Login from "./pages/Login";
 import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
@@ -44,6 +50,14 @@ function App() {
             <Route path="/stranica" element={<Stranica />} />
             <Route path="/torte" element={<Torte />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/admin" element={<Admin />}>
+              <Route index element={<MyDetails />} />
+              <Route path="mydetails" element={<MyDetails />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="password" element={<Password />} />
+              <Route path="team" element={<Team />} />
+            </Route>
+            <Route path="/login" element={<Login />} />
             <Route path="/form" element={<Form />} />
             <Route path="/blog-predavanje" element={<BlogPredavanje />} />
             <Route path="/torta/:slug" element={<TorteSingle />} />

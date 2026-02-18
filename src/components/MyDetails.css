@@ -1,0 +1,104 @@
+/* Kontejner za cijeli tab koji dodaje laganu animaciju prijelaza */
+.admin-settings__tab-content {
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Grid sustav za First Name i Last Name */
+.admin-settings__form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+/* Stilovi za upload zonu (onaj isprekidani okvir) */
+.admin-settings__upload {
+  margin: 32px 0;
+}
+
+.upload-zone {
+  border: 2px dashed #eaecf0;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #ffffff;
+}
+
+.upload-zone:hover {
+  border-color: #7f56d9;
+  background-color: #f9f5ff;
+}
+
+.upload-zone__icon {
+  width: 40px;
+  height: 40px;
+  background: #f2f4f7;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  color: #667085;
+}
+
+.upload-zone p {
+  font-size: 14px;
+  color: #667085;
+  margin-bottom: 4px;
+}
+
+.upload-zone p strong {
+  color: #7f56d9;
+  font-weight: 600;
+}
+
+.upload-zone span {
+  font-size: 12px;
+  color: #667085;
+}
+
+/* Specifičan stil za polja koja su samo za čitanje (Role) */
+.input--readonly {
+  background-color: #f9fafb !important;
+  color: #667085;
+  cursor: not-allowed;
+  border-color: #f2f4f7 !important;
+}
+
+/* Input s ikonom (Email polje) */
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon i {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #667085;
+}
+
+.input-with-icon input {
+  padding-left: 40px !important;
+}
+
+/* Animacija */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responzivnost za mobitele */
+@media (max-width: 768px) {
+  .admin-settings__form-grid {
+    grid-template-columns: 1fr;
+  }
+}
