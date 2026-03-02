@@ -169,7 +169,12 @@ const BlogPredavanje = () => {
                       <div className="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
                         <small className="text-muted">
                           <strong>
-                            {post._embedded?.author?.[0]?.name || "Nepoznato"}
+                            <Link
+                              to={`/autor/${post._embedded?.author?.[0]?.slug || post.author}`}
+                              className="author-link text-decoration-none text-dark fw-bold"
+                            >
+                              {post._embedded?.author?.[0]?.name || "Nepoznato"}
+                            </Link>
                           </strong>
                         </small>
                         <Link

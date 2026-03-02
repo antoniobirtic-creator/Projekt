@@ -1,0 +1,75 @@
+.product-card {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+.img-container {
+  height: 200px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.img-container img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain; /* Da se slike ne rastežu */
+  padding: 10px;
+}
+
+.price-tag {
+  letter-spacing: -0.5px;
+}
+
+/* Stil za badge kategorije */
+.badge {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.btn-outline-danger:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+.product-card {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  border-radius: 15px;
+}
+
+.product-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-outline-danger {
+  transition: all 0.3s ease;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+  transform: scale(1.02);
+}
+
+.img-container img {
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .img-container img {
+  transform: scale(1.1);
+}

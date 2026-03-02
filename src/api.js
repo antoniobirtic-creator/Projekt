@@ -1,14 +1,33 @@
-// src/api.js
 const BASE_URL = process.env.REACT_APP_API_URL;
 
 export const API_URLS = {
-  posts: `${BASE_URL}v2/posts?_embed`,
+  // Makni ?_embed odavde, to dodajemo dinamički
+  posts: `${BASE_URL}v2/posts`,
   categories: `${BASE_URL}v2/categories`,
-  users: `${BASE_URL}v2/users?per_page=20`,
-  contact: `${BASE_URL}v2/pages/1184`,
-  torte: `${BASE_URL}v2/torte?_embed`,
-  vjezba: `${BASE_URL}v2/pages/1338`,
-  torte_single: (slug) => `${BASE_URL}v2/torte?slug=${slug}&_embed`,
+  users: `${BASE_URL}v2/users`,
+  me: `${BASE_URL}v2/users/me`,
 };
 
-export default BASE_URL;
+export const authenticatedFetch = async (url, options = {}) => {
+  const token = localStorage.getItem("token");
+  const headers = {
+    "Content-Type": "application/json",
+    ...options.headers,
+  };
+
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  const response = await fetch(url, { ...options, headers });
+
+  if (response.status === 401) {
+    localStorage.removeItem("token");
+    window.location.href = "/login";
+    return null;
+  }
+
+  // SNR dodatak: Vraćamo i podatke i headere jer nam trebaju za paginaciju (X-WP-TotalPages)
+  const data = await response.json();
+  return { data, headers: response.headers, status: response.status };
+};
