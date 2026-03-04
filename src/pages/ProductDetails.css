@@ -1,0 +1,31 @@
+.main-image-container img {
+  transition: transform 0.5s ease;
+}
+
+.main-image-container:hover img {
+  transform: scale(1.05);
+}
+
+.thumb-box {
+  flex: 0 0 auto;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  background: white;
+}
+
+.thumb-box:hover {
+  border-color: #dc3545 !important;
+}
+
+.thumbnail-gallery::-webkit-scrollbar {
+  height: 5px;
+}
+
+.thumbnail-gallery::-webkit-scrollbar-thumb {
+  background: #dc3545;
+  border-radius: 10px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

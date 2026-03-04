@@ -4,7 +4,7 @@ import "./Gutenberg.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { CartProvider } from "./context/CartContext";
-
+import ProductDetails from "./pages/ProductDetails";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Naslovnica from "./pages/Naslovnica";
@@ -52,6 +52,7 @@ function App() {
 
               {/* Shopping Rute */}
               <Route path="/shop" element={<Shop />} />
+              <Route path="/product/:slug" element={<ProductDetails />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/checkout" element={<Checkout />} />
 

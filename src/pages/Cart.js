@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import "./Cart.css";
 
 const Cart = () => {
-  const { cart, removeFromCart, cartTotal, addToCart } = useCart();
+  // SNR: Ovdje je bila greška. Izvlačimo 'totalAmount' jer si ga tako nazvao u Contextu.
+  const { cart, removeFromCart, totalAmount, addToCart } = useCart();
 
   if (cart.length === 0)
     return (
@@ -91,7 +92,8 @@ const Cart = () => {
             <h4 className="fw-bold mb-4">Sažetak narudžbe</h4>
             <div className="d-flex justify-content-between mb-2">
               <span>Međuzbroj:</span>
-              <span>{cartTotal.toFixed(2)} €</span>
+              {/* SNR: Koristimo totalAmount i dodajemo fallback || 0 za sigurnost */}
+              <span>{(totalAmount || 0).toFixed(2)} €</span>
             </div>
             <div className="d-flex justify-content-between mb-3">
               <span>Dostava:</span>
@@ -101,7 +103,7 @@ const Cart = () => {
             <div className="d-flex justify-content-between mb-4">
               <span className="fs-5 fw-bold">Ukupno:</span>
               <span className="fs-4 fw-bold text-danger">
-                {cartTotal.toFixed(2)} €
+                {(totalAmount || 0).toFixed(2)} €
               </span>
             </div>
             <Link
